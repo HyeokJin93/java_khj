@@ -1,7 +1,8 @@
 package all;
 
 public class framework {
-/* # 컬렉션 프레임워크
+/* 
+ * # 컬렉션 프레임워크
 
 * 데이터를 편리하게 관리하기 위해 나온 클래스
 * Collection과 Map으로 구성
@@ -28,7 +29,37 @@ ArrayList<클래스명> list = new ArrayList<클래스명>();
 
 * 리스트에 객체를 저장. 객체는 참조변수이고, 주소를 저장하는 변수이다. 리스트에 주소를 저장
 
+### 리스트 멤버 메소드
 
+* int size() 
+  * 리스트에 들어있는 객체들의 갯수
+* boolean add(Object e)
+  * 리스트에 객체를 추가
+* boolean addAll(Collection<? extends Object> c)
+  * 리스트에 다른 리스트를 추가
+* boolean contains(Object o)
+  * 리스트에 o 객체와 일치하는 객체가 있는지 없는지 알려줌
+* boolean containsAll(Collection<?> c)
+  * 리스트에 다른 리스트 객체들이 모두 있는지 없는지 알려줌. 부분만 있으면 없다고 알려줌
+* void clear()
+  * 리스트를 비워줌
+* boolean remove(Object o) 
+  * 리스트에서 o 객체와 일치하는 객체를 삭제하고 삭제여부를 알려줌
+* Object remove(int index)
+  * 리스트에서 index 번지에 있는 객체를 삭제 후 반환
+* boolean removeAll(Collection<?> c)
+  * 리스트에서 c리스트에 있는 객체들을 삭제
+* Iterator<Object> iterator() 
+  * 리스트를 이용하여 반복자를 반환
+* int indexOf(Object o)
+  * 리스트에 객체가 몇번지에 있는지 알려줌. 없으면 -1을 알려줌
+* Object get(int index)
+  * 리스트에만 있고, 셋에는 없음
+  * 리스트에서 index 번지에 있는 객체를 반환
+* Obejct set(int index, Object o)
+  * 리스트에만 있고, 셋에는 없음
+  * 없는 번지인 경우 예외 발생
+  * 리스트에서 index번지에 있는 객체를 o 객체로 수정 후 기존에 있는 객체정보를 반환
 
 ### Set
 
@@ -47,6 +78,67 @@ ArrayList<클래스명> list = new ArrayList<클래스명>();
 * key는 중복이 불가능, value는 중복이 가능
 * Map은 인터페이스
 * Map<클래스명1, 클래스명2>
- * */
+  * 클래스명1 : key
+  * 클래스명2 : value
+
+### ArrayList
+
+* 배열로 이루어진 리스트
+* 주소가 연속된 주소를 갖기 때문에 탐색이 빠르다
+* 중간 요소를 삭제된 경우, 앞으로 밀어줘야 하기 때문에 삭제 속도가 느리다
+
+
+
+### LinkedList
+
+* 링크로 연결된 리스트
+* 주소가 연속되지 않기 때문에 탐색이 느리다
+* 중간 요소를 삭제하더라도 앞에 있는 요소가 가르키는 주소만 변경하면 되기 때문에 속도가 빠르다
+
+
+
+### ArrayList vs LinkedList
+
+* 리스트에 삭제가 많이 일어나는 경우는 LinkedList를 이용하고 검색이 많이 발생하는 경우는 ArrayList를 이용하면 됨
+* 다루는 리스트의 크기가 많지 않으면 편하게 ArrayList를 쓸 예정
+
+
+
+### 자료구조
+
+* 자료를 효율적으로 관리하기 위한 기법
+* ArrayList, LinkeList, Stack, Queue, Graph, Tree 등
+
+
+
+### 알고리즘
+
+* 성능을 향상시키 위한 방법
+* 정렬 등
+
+
+
+### Stack
+
+* LIFO : Last In First Out
+* 나중에 들어간 데이터가 먼저 나옴
+* 메소드 호출 스택
+
+
+
+### Queue
+
+* FIFO : First In First Out
+* 먼저 들어간 데이터가 먼저 나옴
+* 프린트 대기 큐
+
+
+
+### Tree
+
+* 데이터를 나무 뿌리처럼 트리에 관리하는 기법
+
+
+ */
 	
 }
