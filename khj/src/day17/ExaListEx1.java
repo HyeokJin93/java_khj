@@ -14,7 +14,7 @@ public class ExaListEx1 {
 		int menu;
 		
 		do {
-			//메뉴 출력
+			//메뉴 출력.
 			printMenu();
 			//메뉴 선택
 			menu = scan.nextInt();
