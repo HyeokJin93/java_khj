@@ -19,6 +19,9 @@ update student
 SELECT * FROM university_khj.student;
 
 
+-- 2000160001교수님이 1번 과목을 강의할 강의 시간표의 일정이 새로 나왔다. 월 1,2,로 결정되었고, 분반은 3분반이다. 
+-- 다음을 실행하는 쿼리문을 작성하세요.
+
 update subject
 	set
 		`su_schedule` = '월1, 월2',
