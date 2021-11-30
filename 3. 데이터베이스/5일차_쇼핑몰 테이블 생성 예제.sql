@@ -21,8 +21,8 @@
  내국인만 가능
 */
 
-CREATE DATABASE shoppingmall;
-USE shoppingmall;
+CREATE DATABASE shoppingmall_khj;
+USE shoppingmall_khj;
 
 CREATE TABLE `order` (
 	`or_num`	varchar(15)	NOT NULL,
