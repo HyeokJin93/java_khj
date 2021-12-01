@@ -148,7 +148,7 @@ CREATE TABLE `ticketing` (
 DROP TABLE IF EXISTS `ticketing_list`;
 
 CREATE TABLE `ticketing_list` (
-	`tl_num`	iint	NOT NULL,
+	`tl_num`	int	NOT NULL,
 	`tl_tk_num`	varchar(10)	NOT NULL,
 	`tl_st_num`	int	NOT NULL
 );
