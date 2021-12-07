@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>이등분배치</title>
+	<style>
+		.box2{
+			border: 2px solid red; padding: 10px;
+		}
+		.box2-1, .box2-2, .box2-3{
+			height: 500px; box-sizing: border-box; border: 2px solid blue;
+			width: calc((100% - 20px) / 3); float: left; 
+		}
+		.box2-2{border-color: #0f0; margin-left: 10px;}
+		.box2-3{border-color: purple; float: right;}
+		.box2::after{
+			clear: both; content: ''; display: block;
+		}
+		.box1{
+			border: 2px solid red;
+		}
+		.box1-1{
+			background-image: url(../img/day1_2_cat.jfif);
+			height: 500px;
+			background-size: auto 500px;
+			background-position: center;
+			background-repeat: no-repeat;
+		}
+	</style>
+</head>
+<body>
+		<div class="box2">
+			<div class="box2-1"></div>
+			<div class="box2-2"></div>
+			<div class="box2-3"></div>
+
+</body>
+</html>
