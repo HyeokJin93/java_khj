@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>회원가입 예제</title>
+	<style>
+		.box{
+			border: 1px black solid; width: 500px; height: 334px; position:absolute; 
+			box-sizing: border-box; left: 500px;}
+		*{width: 500px; padding: 0px; margin: 0px;}
+		input, .전송, #처음{ height: 40px; width: 500px;}
+		input, .전송{border: 2px solid skyblue; font-size: 20px; color:skyblue; ;}
+		#처음{color: red; font-size: 20px; text-align: center;}
+		.전송{width:500px; background: none;}
+		input[type=radio]{
+			font-size: 15px; height: 40px; width: 100px;
+		}
+		input{margin-bottom: 20px;}
+		
+	</style>
+</head>
+<body>
+	<form action="">
+		<div class="box">
+			<div id="처음">회원가입</div>
+			<input type=text placeholder="아이디"></input:id> <br>
+			<input type="password" name="pw" id="password1" placeholder="비밀번호"><br>
+			<input type="password" name="pw" id="password2" placeholder="비밀번호 확인"><br>
+			성별<input type="radio" name="gender" value="M" checked>남자
+			<input type="radio" name="gender" value="F">여자 <br>
+			<button class="전송">회원가입</button>
+		</div>
+	</form>
+</body>
+</html>
