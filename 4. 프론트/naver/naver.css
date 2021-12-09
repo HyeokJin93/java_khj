@@ -1,0 +1,64 @@
+@charset "utf-8";
+
+*{padding: 0; margin: 0; list-style:none; text-decoration: none; color:#000; }
+
+/* 공통 */
+.container{
+	width: 1190px; margin: 0 auto; padding: 0 30; box-sizing: border-box;
+}
+.container-fluid{
+	min-width: 1190px;
+}
+
+/* 네이버 웨일 박스 */
+.whale-box{
+	height: 49px; background: #f3f1ff;
+}
+
+/* 네이버 검색창 박스 */
+.search-box{
+	height: 160px; position:relative;
+}
+	.logo-box{
+		width: 222px; height: 52px; 
+		position:absolute; top: calc(50% - 32px); overflow: hidden; left: 21px;
+	}
+	.logo{
+		display: block; width: 100%; height: 100%; 
+		background-image: url(https://s.pstatic.net/static/www/img/uit/2021/sp_main_5f355c.png);
+		background-size: 444px 439px;
+		background-position: 0 -158px;
+	}
+	.search-input-box{
+		width: 568px; height: 56px; background: white; border: #19ce60 2px solid; 
+		position:absolute; top: calc(50% - 28px); left:268px; 
+	}
+		.box-search{
+			width:474px; height: 52px; 
+		}
+			.input-text{
+				width: 444px;	height: 24px;	padding: 13px 15px;	margin: 1px;
+				background: none;	font-size: 18px; line-height: 24px; border: none;
+				color: #000; outline:none; font-weight: 600;
+			}
+			.btn-submit{
+				position: absolute;	top: 0;	right: 0;	bottom: 0;	width: 56px;
+				background-color: #19ce60;
+				cursor: pointer;
+
+			}
+	
+/* 중간 메뉴 박스 */
+.menu-box{
+	height: 52px; background: green;
+}
+
+/* 네이버 컨텐츠 박스 */
+.contents-box{
+	min-height: 1000px; background: blue;
+}
+
+/* 네이버 풋터 */
+.footer-box{
+	height: 423px; background: plum;
+}
