@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>메뉴이동 예제</title>
+	<script src="../js/jquery.min.js"></script>
+	<style>
+		.container-box{
+			display:flex; width:1000px; height: 100px; position: relative;
+			margin:0 auto;
+			
+		}
+		.box{
+			width:100%; border:red 2px solid; border-left:none;
+		}
+		.box:first-child{border-left:red 2px solid;}
+		.prev{
+			background-color: greenyellow; border:greenyellow 1px solid;
+			border-radius: 50%;	width:50px; height: 50px; 
+			position: absolute; top:25px; left: -25px;
+			content: ''; 
+		}
+		.next{
+			background-color: greenyellow; border:greenyellow 1px solid;
+			border-radius: 50%;	width:50px; height: 50px; 
+			position: absolute; top:25px; right: -25px;
+			content: '';
+		}
+	
+		.box1.sel{ background-color: #4a94e1}
+		.box2.sel{ background-color: #66c971}
+		.box3.sel{ background-color: #35ae5e}
+		.box4.sel{ background-color: #ebaa00}
+		.box5.sel{ background-color: #5bb8e1}
+		.box6.sel{ background-color: #1a2f63}
+	</style>
+</head>
+<body>
+	<div class="container-box">
+		<div class="box box1 sel"></div>
+		<div class="box box2"></div>
+		<div class="box box3 "></div>
+		<div class="box box4"></div>
+		<div class="box box5"></div>
+		<div class="box box6"></div>
+		<button class="prev"></button>
+		<button class="next"></button>
+	</div>
+	<script>
+		$('.box').click(function(e){
+			e.preventDefault();
+			$('.box').removeClass('sel');
+			$(this).addClass('sel');
+		});
+
+		$('.prev').click(function(){
+			$('.sel').prev('div').addClass('sel')
+			$('.sel').next('div').removeClass('sel')
+		})
+		$('.next').click(function(){
+			$('.sel').next('div').addClass('sel')
+			$('.sel').prev('div').removeClass('sel')
+		})
+	</script>
+</body>
+</html>
