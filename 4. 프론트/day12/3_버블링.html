@@ -13,21 +13,21 @@
 			<a href="#" class="btn">버튼</a>
 		</div>
 	</div>
-<script>
-	$('.btn').click(function(e){
-		// 버블링을 막아주는 코드
-		e.stopPropagation();
-		console.log(e);
-		console.log('.btn 클릭')
-	});
-	$('.box').click(function(e){
-		console.log(e);
-		console.log('.box 클릭')
-	});
-	$('.container').click(function(e){
-		console.log(e);
-		console.log('.container 클릭')
-	});
-</script>
+	<script>
+		$('.btn').click(function(e){
+			//버블링을 막아주는 코드
+			e.stopPropagation();
+			console.log(e);
+			console.log('.btn 클릭');
+		});
+		$('.box').click(function(e){
+			console.log(e);
+			console.log('.box 클릭');
+		});
+		$('.container').click(function(e){
+			console.log(e);
+			console.log('.container 클릭');
+		});
+	</script>
 </body>
 </html>
