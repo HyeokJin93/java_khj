@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>타이머 예제</title>
+	<script src="../js/jquery.min.js"></script>
+	<style>
+		.timer-box{
+			width: 500px; height: 50px; padding: 10px; 
+			border: 1px solid black; line-height: 50px; text-align: center;
+		}
+		.record-box{width: 500px; height: auto; padding: 10px; 
+			border: 1px solid black; line-height: auto; text-align: center;
+
+		}
+	</style>
+</head>
+</body>
+	<!--
+		60이 되면 1: 00이 되도록 코드를 작성하세요.
+		hh:MM:ss mmm
+		00:00:00 000 
+		-->
+	<div class="timer-box">
+		<span class="hour">00</span> : <span class="minute">00</span> :
+		<span class="second">00</span> <span class="milliSecond">000</span>
+	</div>
+	<button class="btn-start">시작</button>
+	<button class="btn-stop">중지</button>
+	<button class="btn-record">기록</button>
+	<button class="btn-reset">리셋</button>
+	<div class="record-box"></div>
+	<script>
+		var ms = 0;
+		var s = 0;
+		var M = 0;
+		var h = 0;
+		var timeId;
+		var arr = [];
+		$(function(){
+			// 첫 화면에서 중지버튼, 리셋버튼 숨김
+			$('.btn-stop').hide();
+			$('.btn-reset').hide();
+			// 시작버튼 클릭
+			$('.btn-start').click(function(){
+				$('.btn-start').toggle();
+				$('.btn-stop').toggle();
+				$('.btn-reset').show();
+				timeID = setInterval(function(){
+					++ms;
+					if(ms==100){ms = 0; ++s;}
+					if(s==60){s = 0; ++M;}
+					if(M==60){M = 0; ++h;}
+					$('.hour').text(addZero(h));
+					$('.minute').text(addZero(M));
+					$('.second').text(addZero(s));
+					$('.milliSecond').text(addZero(ms));
+				}, 10);
+			});
+			// 중지버튼 클릭
+			$('.btn-stop').click(function(){
+				$('.btn-start').toggle();
+				$('.btn-stop').toggle();
+				clearInterval(timeID)
+			});
+			// 리셋버튼 클릭
+			$('.btn-reset').click(function(){
+				$('.btn-start').hide();
+				$('.btn-stop').show();
+				$('.btn-stop').click();
+				ms = 0; s = 0; M = 0; h = 0;
+				$('.hour').text(addZero(h));
+				$('.minute').text(addZero(M));
+				$('.second').text(addZero(s));
+				$('.milliSecond').text(addZero(ms));
+			})
+			// 기록버튼 클릭
+			$('.btn-record').click(function(){
+				arr.push(timeID);
+				arr.text();
+			})
+		});
+		function addZero(num, isMs){
+			if(isMs){
+				return num  < 10 ? '00' + num : (num < 100 ? '0' + num : num);
+			}
+			return num < 10 ? '0'+num : num;
+			/*
+			if(num < 10){
+				return '0'+num;
+			}else{
+				return num;
+			}
+			*/
+		}
+		
+	</script>
+<body>
+	
+</html>
