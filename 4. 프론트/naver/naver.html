@@ -37,7 +37,7 @@
 					</li>
 					<li class="service-item">
 						<label>
-							<input type="checkbox" name="menu" value="네이버 MY CAR" class="check-menu">네이버 MY CAR
+							<input type="checkbox" name="menu" value="MY CAR" class="check-menu">네이버 MY CAR
 						</label>
 					</li>
 					<li class="service-item">
@@ -47,17 +47,17 @@
 					</li>
 					<li class="service-item">
 						<label>
-							<input type="checkbox" name="menu" value="네이버 예약" class="check-menu">네이버 예약
+							<input type="checkbox" name="menu" value="예약" class="check-menu">네이버 예약
 						</label>
 					</li>
 					<li class="service-item">
 						<label>
-							<input type="checkbox" name="menu" value="네이버 프리미엄콘텐츠" class="check-menu">네이버 프리미엄콘텐츠
+							<input type="checkbox" name="menu" value="프리미엄콘텐츠" class="check-menu">네이버 프리미엄콘텐츠
 						</label>
 					</li>
 					<li class="service-item">
 						<label>
-							<input type="checkbox" name="menu" value="네이버플러스 멤버쉽" class="check-menu">네이버플러스 멤버쉽
+							<input type="checkbox" name="menu" value="멤버쉽" class="check-menu">네이버플러스 멤버쉽
 						</label>
 					</li>
 					<li class="service-item">
@@ -103,8 +103,8 @@
 					<a href="#" class="btn-service-set">메뉴 설정</a>
 				</div>
 				<div class="service-btn-box2">
-					<a href="#" class="btn-service-reset">초기화</a>
-					<a href="#" class="btn-service-save">저장</a>
+					<a href="#" class="btn-service-init">초기화</a>
+					<a href="#" class="btn-service-save btn-green">저장</a>
 				</div>
 			</div>
 			<!-- 메일~ 더보기전까지 메뉴 -->
@@ -136,7 +136,7 @@
 					</li>
 				</ul>
 				<ul class="black-menu-box menu">
-					<li class="menu-item ">
+					<li class="menu-item">
 						<a href="#" class="menu-link">사전</a>
 					</li>
 					<li class="menu-item">
@@ -160,12 +160,6 @@
 					<li class="menu-item">
 						<a href="#" class="menu-link">웹툰</a>
 					</li>
-				</ul>
-				<ul class="empty-menu-box">
-						<div class="empty-box"></div>
-						<div class="empty-box"></div>
-						<div class="empty-box"></div>
-						<div class="empty-box"></div>
 				</ul>
 				<a href="#" class="btn-more">더보기</a>
 			</div>
@@ -573,37 +567,24 @@
 		</div>
 	</div>
 	<footer class="footer-box container"></footer>
+	<script src="naverRolling.js"></script>
+	<script src="menu.js"></script>
 	<script>
-		//더보기 버튼 클릭
-		$('.menu-box .btn-more').on('click', function(e){
-			$('.menu-box .service-btn-box').toggle();
-			e.preventDefault();
-			$('.service-box').toggle();
-			
-			if(!$(this).hasClass('fold')){
-				$('.menu-box .btn-more').text('접기');
-			}else{
-				$('.menu-box .btn-more').text('더보기');
-				$('.menu-box .check-menu').hide();
-				$('.service-btn-box1').show();
-				$('.service-btn-box2').hide();
-			}
-			$(this).toggleClass('fold');
-		});
+		
 		$('.btn').click(function(e){
 			e.preventDefault();
 		});
+		//오늘 읽을만한 글
 		$('.contents-l-box3 .category-link').click(function(e){
 			e.preventDefault();
 			$('.contents-l-box3 .category-link').removeClass('sel');
 			$(this).addClass('sel');
 		});
-
+		/*
 		var min3 = 0, max3 = 1;
 		var num3 = min3;
-
+		
 		$('.contents-l-box3 .btn-box .btn').click(function(){
-			console.log(1)
 			if($(this).hasClass('btn-prev')){
 				num3 = --num3 < min3 ? min3 : num3;
 			}else{
@@ -611,7 +592,7 @@
 			}
 			$('.contents-l-box3 .main-category').animate({marginLeft:-750 * num3});
 		});
-
+		*/
 		//메뉴 탭 이동
 		//메뉴 클릭
 		var menuSelector = '.contents-l-box3 .category-item';
@@ -643,7 +624,7 @@
 			}
 		});
 		//이전버튼
-		$('.btn-prev').click(function(e){
+		$('.contents-l-box3 .btn-prev').click(function(e){
 			e.preventDefault();
 			if( $(menuSelector+' .sel').parent().prev().length == 1){
 				$(menuSelector+' .sel').parent().prev().click();
@@ -657,7 +638,7 @@
 			}
 		});
 		//다음버튼
-		$('.btn-next').click(function(e){
+		$('.contents-l-box3 .btn-next').click(function(e){
 			e.preventDefault();
 			if( $(menuSelector+' .sel').parent().next().length == 1){
 				$(menuSelector+' .sel').parent().next().click();
@@ -668,112 +649,12 @@
 						.next().children().first().children().click();
 					var width = $('.contents-l-box3 .category-item .sel')
 						.parents('.category-list').width();
-					$('.container-menu').animate({'margin-left':'-'+width+'px'},500);
+					console.log(width)
+					$('.main-category').animate({'margin-left':'-'+width+'px'},500);
 				}
 			}
 		});
 		$('.category-list:first-of-type .category-item:first-child').children().click();
-
-		//롤링 기능
-		var issueAreaId;
-		issueAreaId = rollingToTop('.issue-area','li',2000, 1000);
-		$('.issue-area').hover(function(){
-			clearInterval(issueAreaId);
-		},function(){
-			issueAreaId = rollingToTop('.issue-area','li',2000, 1000);
-		});
-
-		var contentsId;
-
-		$(function(){
-			contentsId = rollingToLeft('.contents-view','.contents-list','.contents-item', 2000, 1000);
-			$('.container').hover(function(){
-				clearInterval(contentsId);
-			},function(){
-				contentsId = rollingToLeft('.contents-view','.contents-list','.contents-item', 2000, 1000);
-			});
-
-			//>버튼클릭
-			$('.contents-r-box2 .next-btn').click(function(e){
-				e.preventDefault();
-				if(!$('.contents-item').first().is(':animated')){
-					var width = $('.contents-view').width();
-					$('.contents-item').first().animate({marginLeft : -width}, 1000, function(){
-						$(this).removeAttr('style').detach().appendTo('.contents-list');
-					});
-				}
-			});
-			//<버튼 클릭
-			$('.contents-r-box2 .prev-btn').click(function(e){
-				e.preventDefault();
-				if(!$('.contents-item').first().is(':animated')){
-					var width = $('.contents-view').width();
-					$('.contents-item').last().detach().css('margin-left',-width+'px')
-						.prependTo('.contents-list').animate({marginLeft : 0}, 1000);
-				}
-			});
-		});
-		// 메뉴 설정 버튼 클릭
-		var maxcount=4;
-		var arr = [];   // 저장 버튼을 클릭하여 저장된 메뉴, 초기화 버튼을 눌렀을 때 빈 배열로 만듦
-		var tempArr = []; // 메뉴 설정 버튼을 클릭한 후 선택한 메뉴
-		var baseArr = ['사전','증권','부동산','지도','VIBE','책','웹툰']
-		$('.btn-service-set').click(function(e){
-			e.preventDefault();
-			$('.service-list .check-menu').show();
-			$('.service-btn-box1').hide();
-			$('.service-btn-box2').show();
-			$('.black-menu-box.menu').hide();
-			$('.empty-menu-box').show();
-			$('.empty-box').first().addClass('focus')
-
-			var blackMenuItem = '<a href="#" class="menu-link">사전</a>'
-			$('.menu-box .check-menu').click(function(){
-				var value = $(this).val();
-				if($(this).is('.checked')){
-					tmpArr.push(val);
-				}else{
-					var index = tmpArr.indexOf(value);
-					tmpArr.splice(index,1);
-				}
-				drawMenu(tmpArr, true);
-			})
-			$('.btn-service-save').click(function(){
-				arr = tmpArr;
-				tmpArr = [];
-				drawMenu(arr, false);
-			})
-			$('.btn-service-init').click(function(){
-				arr = tmpArr = [];
-				drawMenu(baseArr, false);
-			})
-			drawMenu(arr,true);not
-		})
-		/* arr: 검은 메뉴를 출력한 메뉴들이 담긴 배열
-		// isDrawBox : 메뉴가 출력되고 남은 부분들을테두리박스로 채울지 말지를 결정하는 박스  
-		// 메뉴 선택중일때 true, 아닐때 false 
-		*/
-		function drawMenu(arr1,isDrawBox){
-				$('.black-menu-box .menu-item').each(function(index){
-					$(this).show();
-					if(index < arr1.length){
-						$(this).removeClass('set');
-						if(isDrawBox){
-							// 글자로 채움
-							$(this).text(arr1[index])
-						}else{
-							var blackMenuItem = '<a href="#" class="menu-link">사전</a>'
-							if(isDrawBox){
-								$(this).addClass('set').text('');
-							}else{isDrawBox && index < maxBlackMenuCount
-								$(this).removeClass('set').text('').hide();
-							}
-							// a태그로 채움
-						}
-					}
-				})
-			}
-
 	</script>
 </body>
 </html>
