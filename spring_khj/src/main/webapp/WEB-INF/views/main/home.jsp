@@ -12,7 +12,7 @@
 </h1>
 <!-- ${serverTime}는 서버에서 화면으로 보낸 데이터. 컨트롤러에서 화면으로 보낸 데이터 -->
 <P>  서버에서 보낸 데이터 : ${serverTime}. </P>
-<a href="/spring/test?num=1&name=홍길동">데이터 전송</a>
+<a href="<%=request.getContextPath()%>/test?num=1&name=홍길동">데이터 전송</a>
 <form action="/spring/test/form" method="get">
 	<h1>Get 방식으로 전송</h1>
 	<input type="text" name="num" placeholder="번호"> <br>
