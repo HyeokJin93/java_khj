@@ -7,9 +7,10 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<div class="container-fluid">
-	  <div class="jumbotron" style="margin-bottom= 0">
-	    <h1>푸터</h1>         
+	<div class="container-fluid" >
+	  <div class="jumbotron" style="margin-bottom: 0">
+	    <h1>푸터</h1>      
+		</div>	         
 	</div>
 </body>
 </html>
