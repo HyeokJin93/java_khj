@@ -16,7 +16,7 @@
 			<div class="form-group">
 			  <textarea class="form-control" name="bd_contents" placeholder="내용" rows="10"></textarea>
 			</div>
-			<button clss="btn btn-outline-success col-12">등록</button>
+			<button class="btn btn-outline-success col-12">등록</button>
 		</form>
 	</div>
 </body>
