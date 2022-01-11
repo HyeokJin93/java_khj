@@ -1,5 +1,7 @@
 package kr.green.green.vo;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class MemberVO {
@@ -37,8 +39,14 @@ public class MemberVO {
 	public Date getMe_birth() {
 		return me_birth;
 	}
-	public void setMe_birth(Date me_birth) {
-		this.me_birth = me_birth;
+	public void setMe_birth(String me_birth) {
+		SimpleDateFormat format;
+		try {
+			format = new SimpleDateFormat("yyyy-MM-dd");
+			this.me_birth = format.parse(me_birth);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 	}
 	public String getMe_address() {
 		return me_address;
@@ -57,6 +65,5 @@ public class MemberVO {
 		return "MemberVO [me_id=" + me_id + ", me_pw=" + me_pw + ", me_name=" + me_name + ", me_gender=" + me_gender
 				+ ", me_birth=" + me_birth + ", me_address=" + me_address + ", me_phone=" + me_phone + "]";
 	}
-	
 	
 }
