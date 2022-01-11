@@ -4,6 +4,8 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,6 +59,12 @@ public class HomeController {
 			mv.setViewName("redirect:/login");
 		else
 			mv.setViewName("redirect:/");
+		return mv;
+	}
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	public ModelAndView logout(ModelAndView mv, HttpServletRequest r) {
+		r.getSession().removeAttribute("user");
+		mv.setViewName("redirect:/");
 		return mv;
 	}
 }
