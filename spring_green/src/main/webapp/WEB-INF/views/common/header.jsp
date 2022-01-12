@@ -11,6 +11,9 @@
 
 	  <a class="navbar-brand" href="<%=request.getContextPath()%>">HOME</a>
 	  <ul class="navbar-nav">
+	        <li class="nav-item">
+		      <a class="nav-link" href="<%=request.getContextPath()%>/board/list">게시글</a>
+		    </li>
 	  	<c:if test="${user == null }">
 		    <li class="nav-item">
 		      <a class="nav-link" href="<%=request.getContextPath()%>/login">로그인</a>
