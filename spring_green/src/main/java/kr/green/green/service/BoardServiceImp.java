@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import kr.green.green.dao.BoardDAO;
 import kr.green.green.dao.MemberDAO;
 import kr.green.green.vo.BoardVO;
+import kr.green.green.vo.MemberVO;
 
 	
 
@@ -21,4 +22,45 @@ public class BoardServiceImp implements BoardService{
 	public List<BoardVO> getBoardList(String bd_type) {
 		return boardDao.selectBoardList(bd_type);
 	}
+
+	@Override
+	public BoardVO getBoard(Integer bd_num) {
+		if(bd_num == null || bd_num <= 0)
+			return null;
+		return boardDao.selectBoard(bd_num);
+	}
+
+	@Override
+	public void registerBoard(BoardVO board, MemberVO user) {
+		// 흐름 상 없어도 되지만 서비스임플 입장에서는 모를 수 있기 때문에 적어줌.
+		if(board == null || user == null)
+			return;
+		
+		if(board.getBd_title() == null || board.getBd_title().trim().length() == 0)
+			return;
+		if(user.getMe_id() == null || user.getMe_id().trim().length() == 0)
+			return;
+		board.setBd_me_id(user.getMe_id());
+		boardDao.insertBoard(board);
+	}
+
+	@Override
+	public void modifyBoard(BoardVO board, MemberVO user) {
+		if(board == null || user == null
+				|| board.getBd_num()<=0)
+			return;
+		
+		BoardVO dbBoard = boardDao.selectBoard(board.getBd_num());
+		
+		if(dbBoard == null)
+			return;
+		
+		if(!dbBoard.getBd_me_id().equals(user.getMe_id()))
+			return;
+		
+		boardDao.updateBoard(board);
+		
+	}
+
+
 }
