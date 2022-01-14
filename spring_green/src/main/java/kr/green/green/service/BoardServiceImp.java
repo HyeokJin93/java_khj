@@ -62,5 +62,19 @@ public class BoardServiceImp implements BoardService{
 		
 	}
 
+	@Override
+	public void deleteBoard(MemberVO user, Integer bd_num) {
+		if(bd_num == null || bd_num <= 0)
+			return;
+		BoardVO board = boardDao.selectBoard(bd_num);
+		if(board == null)
+			return;
+		if(user == null || !board.getBd_me_id().equals(user.getMe_id()))
+			return;
+		boardDao.deleteBoard(bd_num);
+	}
+		
+
+
 
 }

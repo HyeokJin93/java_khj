@@ -29,5 +29,5 @@
   		bd_contents = #{board.bd_contents},
   		bd_up_date = #{board.bd_up_date}
   		where bd_num = #{board.bd_num}
-  </update>
+  </update>  
 </mapper>
