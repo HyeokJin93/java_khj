@@ -35,13 +35,13 @@ public class HomeController {
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public ModelAndView loginGet(ModelAndView mv) {
-		System.out.println("/login:get :");
+		// System.out.println("/login:get :");
 		mv.setViewName("/member/login");
 		return mv;
 	}
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public ModelAndView loginPost(ModelAndView mv, MemberVO member) {
-		System.out.println("/login:post : " + member);
+		// System.out.println("/login:post : " + member);
 		MemberVO user = memberService.login(member);
 		if(user == null) {
 			mv.setViewName("redirect:/login");
@@ -53,7 +53,7 @@ public class HomeController {
 	}
 	@RequestMapping(value = "/signup", method = RequestMethod.GET)
 	public ModelAndView signupGET(ModelAndView mv, MemberVO user) {
-		System.out.println("/signup:get : ");
+		// System.out.println("/signup:get : ");
 		mv.setViewName("/member/signup");
 		return mv;
 	}
@@ -62,7 +62,7 @@ public class HomeController {
 		// MemberVO user = new MemberVO();
 		// user.setMe_id(me_id);
 		// user.setMe_birth(me_birth);
-		System.out.println("/signup:post : " + user);
+		// System.out.println("/signup:post : " + user);
 		if(memberService.signup(user)) {
 			mv.setViewName("redirect:/");
 		}else{
