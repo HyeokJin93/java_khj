@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.green.green.vo.BoardVO;
+import kr.green.green.vo.FileVO;
 import kr.green.green.vo.MemberVO;
 
 public interface BoardService {
@@ -18,6 +19,8 @@ public interface BoardService {
 	void modifyBoard(BoardVO board, MemberVO user);
 
 	void deleteBoard(MemberVO user, Integer bd_num);
+
+	List<FileVO> getFileList(Integer bd_num);
 
 
 
