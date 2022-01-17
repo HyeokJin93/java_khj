@@ -11,7 +11,11 @@
  		select * from board where bd_num = #{bd_num} and bd_del = 'N'
  	</select>
  	
- 	<insert id="insertBoard">
+ 	<insert id="insertBoard"
+ 		useGeneratedKeys="true"
+ 		keyProperty="board.bd_num"
+ 		parameterType="kr.green.green.vo.BoardVO">
+ 		
  		insert into 
  			board(
  				bd_title,
@@ -47,5 +51,10 @@
 	 		bd_del_date = now()
 	 	where bd_num = #{bd_num}
  	</update>
+ 	
+ 	<insert id="insertFile">
+ 		insert into file(fi_ori_name, fi_name, fi_bd_num)
+ 			values(#{file.fi_ori_name}, #{file.fi_name}, #{file.fi_bd_num})
+ 	</insert>
  	
 </mapper>

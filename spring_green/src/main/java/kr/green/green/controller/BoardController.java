@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import kr.green.green.service.BoardService;
@@ -40,11 +41,12 @@ public class BoardController {
 		return mv;
 	}
 	@RequestMapping(value="/board/register", method=RequestMethod.POST)
-	public ModelAndView boardRegistertPost(ModelAndView mv, BoardVO board, HttpServletRequest r) {
+	public ModelAndView boardRegistertPost(ModelAndView mv, BoardVO board,
+			HttpServletRequest r, List<MultipartFile> files) {
 		MemberVO user = (MemberVO)r.getSession().getAttribute("user");
 		// board.setBd_me_id(user.getMe_id());
 		board.setBd_type("일반");
-		boardService.registerBoard(board, user);
+		boardService.registerBoard(board, user, files);
 		mv.setViewName("redirect:/board/list");
 		return mv;
 	}

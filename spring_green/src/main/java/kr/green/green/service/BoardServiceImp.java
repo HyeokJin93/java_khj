@@ -1,13 +1,16 @@
 package kr.green.green.service;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.green.green.dao.BoardDAO;
-import kr.green.green.dao.MemberDAO;
+import kr.green.green.utils.UploadFileUtils;
 import kr.green.green.vo.BoardVO;
+import kr.green.green.vo.FileVO;
 import kr.green.green.vo.MemberVO;
 
 	
@@ -18,6 +21,8 @@ public class BoardServiceImp implements BoardService{
 	@Autowired
 	BoardDAO boardDao;
 
+	String uploadPath = "C:\\JAVA\\upload";
+	
 	@Override
 	public List<BoardVO> getBoardList(String bd_type) {
 		return boardDao.selectBoardList(bd_type);
@@ -31,7 +36,7 @@ public class BoardServiceImp implements BoardService{
 	}
 
 	@Override
-	public void registerBoard(BoardVO board, MemberVO user) {
+	public void registerBoard(BoardVO board, MemberVO user, List<MultipartFile> files) {
 		// 흐름 상 없어도 되지만 서비스임플 입장에서는 모를 수 있기 때문에 적어줌.
 		if(board == null || user == null)
 			return;
@@ -42,6 +47,27 @@ public class BoardServiceImp implements BoardService{
 			return;
 		board.setBd_me_id(user.getMe_id());
 		boardDao.insertBoard(board);
+		
+		if(files == null || files.size() == 0)
+			return;
+		for(MultipartFile tmpFile : files) {
+			if(tmpFile != null && tmpFile.getOriginalFilename().length() != 0) {
+				try {
+					String path = UploadFileUtils.uploadFile(
+							uploadPath, 
+							tmpFile.getOriginalFilename(), 
+							tmpFile.getBytes());
+					FileVO file = new FileVO(tmpFile.getOriginalFilename(),
+							path,
+							board.getBd_num());
+					boardDao.insertFile(file);
+				} catch (IOException e) {
+					e.printStackTrace();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 
 	@Override
