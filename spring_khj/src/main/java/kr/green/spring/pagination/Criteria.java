@@ -14,12 +14,12 @@ public class Criteria {
 	
 	public Criteria() {
 		this.page = 1;
-		this.perPageNum = 2;
+		this.perPageNum = 5;
 		this.search = "";
 	}
 	public Criteria(int page, int perPageNum) {
 		this.page = page <= 0 ? 1 : page;
-		this.perPageNum = perPageNum <= 0 ? 2 : perPageNum;
+		this.perPageNum = perPageNum <= 0 ? 5 : perPageNum;
 	}
 	/* 쿼리문에서 limit에 사용되는 인덱스를 계산하는 getter
 	 * limit 번지, 갯수로 쿼리를 작성해야하는데

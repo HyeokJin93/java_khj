@@ -42,6 +42,11 @@
 					<button class="btn btn-outline-success">삭제</button>
 				</a>
 			</c:if>
+			<c:if test="${board.bd_num == board.bd_ori_num}">
+				<a href="<%=request.getContextPath()%>/board/register?bd_ori_num=${board.bd_num}">
+					<button class="btn btn-outline-success">답변</button>
+				</a>
+			</c:if>
 		</c:if>
 		<c:if test="${board == null}">
 			<h1>없는 게시글이거나 삭제된 게시글 입니다.</h1>
