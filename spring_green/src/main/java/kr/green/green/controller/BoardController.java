@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import kr.green.green.pagination.Criteria;
+import kr.green.green.pagination.PageMaker;
 import kr.green.green.service.BoardService;
 import kr.green.green.vo.BoardVO;
 import kr.green.green.vo.FileVO;
@@ -31,8 +33,11 @@ public class BoardController {
 	BoardService boardService;
 	
 	@RequestMapping(value="/board/list", method=RequestMethod.GET)
-	public ModelAndView boardListGet(ModelAndView mv) {
-		List<BoardVO> list = boardService.getBoardList("일반");
+	public ModelAndView boardListGet(ModelAndView mv, Criteria cri) {
+		List<BoardVO> list = boardService.getBoardList("일반", cri);
+		int totalCount = boardService.getTotalCount(cri);
+		PageMaker pm = new PageMaker(totalCount, 5, cri);
+		mv.addObject("pm",pm);
 		mv.addObject("list",list);
 		mv.setViewName("/board/list");
 		return mv;
@@ -105,7 +110,7 @@ public class BoardController {
 	public ModelAndView boardDeleteGet(ModelAndView mv, Integer bd_num, HttpServletRequest r) {
 		BoardVO board = boardService.getBoard(bd_num);
 		MemberVO user = (MemberVO)r.getSession().getAttribute("user");
-		boardService.deleteBoard(user, bd_num);
+		boardService.deleteBoard(bd_num, user);
 		mv.setViewName("redirect:/board/list");
 		return mv;
 	}
