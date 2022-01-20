@@ -39,5 +39,17 @@
 			<button class="btn btn-outline-success">삭제</button>
 		</a>
 	</c:if>
+	<!-- 현재 보고있는 게시글이 원본 게시글 -->
+	<c:if test="${user != null}" && "${board.bd_num == board.bd_ori_num}">
+		<a href="<%=request.getContextPath()%>/board/register?bd_ori_num=${board.bd_num}">
+			<button class="btn btn-outline-success">답변</button>
+		</a>
+	</c:if>
+		<!-- 현재 보고있는 게시글이 답글 -->
+	<c:if test="${user != null}" && "${board.bd_num != board.bd_ori_num}">
+		<a href="<%=request.getContextPath()%>/board/register?bd_ori_num=${board.bd_ori_num}">
+			<button class="btn btn-outline-success">답변</button>
+		</a>
+	</c:if>
 </body>
 </html>

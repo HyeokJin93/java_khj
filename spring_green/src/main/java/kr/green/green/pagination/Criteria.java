@@ -7,11 +7,13 @@ public class Criteria {
 	private int page; 
 	private int perPageNum;
 	private String type;
+	private String search;
 	
 	public Criteria() {
 		this.page = 1;
 		this.perPageNum = 5;
 		this.type="일반";
+		this.search="";
 	}
 	public Criteria(int page, int perPageNum) {
 		this.page = page <= 0 ? 1 : page;
