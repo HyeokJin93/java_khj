@@ -61,10 +61,10 @@ public class BoardController {
 	}
 	@RequestMapping(value="/board/register", method=RequestMethod.POST)
 	public ModelAndView boardRegistertPost(ModelAndView mv, BoardVO board,
-			HttpServletRequest r, List<MultipartFile> files) {
+			HttpServletRequest r, List<MultipartFile> files2) {
 		MemberVO user = (MemberVO)r.getSession().getAttribute("user");
 		// board.setBd_me_id(user.getMe_id());
-		boardService.registerBoard(board, user, files);
+		boardService.registerBoard(board, user, files2);
 		mv.addObject("type",board.getBd_type());
 		mv.setViewName("redirect:/board/list");
 		return mv;
