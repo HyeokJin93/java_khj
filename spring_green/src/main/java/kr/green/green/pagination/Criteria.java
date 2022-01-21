@@ -27,5 +27,9 @@ public class Criteria {
 	public int getPageStart() {
 		return (this.page -1) * perPageNum;
 	}
-	
+	public String getTypeTitle() {
+		if(type != null && type.equals("공지"))
+			return "공지사항";
+		return "게시글";
+	}
 }

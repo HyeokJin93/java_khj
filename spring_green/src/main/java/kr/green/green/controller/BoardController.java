@@ -34,7 +34,7 @@ public class BoardController {
 	
 	@RequestMapping(value="/board/list", method=RequestMethod.GET)
 	public ModelAndView boardListGet(ModelAndView mv, Criteria cri) {
-		List<BoardVO> list = boardService.getBoardList("일반", cri);
+		List<BoardVO> list = boardService.getBoardList(cri);
 		int totalCount = boardService.getTotalCount(cri);
 		PageMaker pm = new PageMaker(totalCount, 5, cri);
 		mv.addObject("pm",pm);
@@ -47,14 +47,15 @@ public class BoardController {
 		BoardVO board = boardService.getBoard(bd_num);
 		// 게시글 번호와 일치하는 첨부파일을 가져오라고 시킴
 		List<FileVO> fileList = boardService.getFileList(bd_num);
+		boardService.updateViews(bd_num);
 		mv.addObject("fileList",fileList);
 		mv.addObject("board",board);
 		mv.setViewName("/board/detail");
 		return mv;
 	}
 	@RequestMapping(value="/board/register", method=RequestMethod.GET)
-	public ModelAndView boardRegistertGet(ModelAndView mv, Integer bd_ori_num) {
-		mv.addObject("bd_ori_num",bd_ori_num);
+	public ModelAndView boardRegistertGet(ModelAndView mv, BoardVO board) {
+		mv.addObject("board",board);
 		mv.setViewName("/board/register");
 		return mv;
 	}
@@ -63,8 +64,8 @@ public class BoardController {
 			HttpServletRequest r, List<MultipartFile> files) {
 		MemberVO user = (MemberVO)r.getSession().getAttribute("user");
 		// board.setBd_me_id(user.getMe_id());
-		board.setBd_type("일반");
 		boardService.registerBoard(board, user, files);
+		mv.addObject("type",board.getBd_type());
 		mv.setViewName("redirect:/board/list");
 		return mv;
 	}
