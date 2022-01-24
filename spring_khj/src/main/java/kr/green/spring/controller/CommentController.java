@@ -33,7 +33,6 @@ import kr.green.spring.vo.MemberVO;
 		@RequestMapping(value ="/comment/list")
 		public Map<String, Object> commentList(Integer co_bd_num,Integer page){
 			Criteria cri = new Criteria(page, 5);
-			System.out.println(co_bd_num +", "+ page);
 			List<CommentVO> list = commentService.selectCommentList(co_bd_num, cri);
 			Map<String,Object> map = new HashMap<String, Object>();
 			
@@ -42,5 +41,10 @@ import kr.green.spring.vo.MemberVO;
 			map.put("pm", pm);
 			map.put("list", list);
 			return map;
+		}
+		@RequestMapping(value ="/comment/delete")
+		public String commentDelete(Integer co_num, HttpServletRequest request){
+			MemberVO user= (MemberVO)request.getSession().getAttribute("user");
+			return commentService.deleteComment(co_num, user);
 		}
 	}	
