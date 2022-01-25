@@ -52,4 +52,5 @@ import kr.green.spring.vo.MemberVO;
 			MemberVO user= (MemberVO)request.getSession().getAttribute("user");
 			return commentService.updateComment(comment,user);
 		}
+		
 	}	

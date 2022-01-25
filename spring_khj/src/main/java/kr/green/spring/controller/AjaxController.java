@@ -12,7 +12,7 @@ import lombok.Data;
 
 @Controller
 public class AjaxController {
-
+	
 	@ResponseBody
 	@RequestMapping(value ="/ajax/test1")
 	public String ajaxtTest1(String str){
@@ -42,3 +42,4 @@ class MemberDTO{
 	String id;
 	String pw;
 }
+
