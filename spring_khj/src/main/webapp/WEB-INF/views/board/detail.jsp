@@ -342,7 +342,7 @@
 				if(comment.co_num == comment.co_ori_num)
 					str +='<div class="co_contents mt-2">'+comment.co_contents+'</div>';
 				else
-					str +='<div class="co_contents mt-2">└댓글:'+comment.co_contents+'</div>';
+					str +='<span>└댓글 : </span><span class="co_contents mt-2">'+comment.co_contents+'</span>';
 					
 				str +='<div class="co_reg_date mt-2">'+co_reg_date+'</div>';
 				
