@@ -139,6 +139,59 @@
 			});
 		}
 	});
+	// 댓글 수정
+	$(document).on('click','.comment-list .btn-mod-comment', function(){
+			$('.co_contents2').each(function(){
+				//remove empty 차이 
+				$(this).siblings('.co_contents').show();
+				$(this).parent().children('button').show();
+				$(this).siblings('.btn-mod-comment2').remove();
+				$(this).remove();
+			});
+			var contents = $(this).siblings('.co_contents').text();
+			var str = 
+				'<div class="form-group co_contents2 mt-2">'+ 
+					'<textarea class="form-control">'+contents+'</textarea>' +
+				'</div>';
+			var btnStr =
+				'<button class="btn-mod-comment2 btn btn-outline-warning ml-2">등록</button>';
+			$(this).siblings('.co_contents').hide();
+			$(this).parent().children('button').hide();
+			$(this).siblings('.co_me_id').after(str);
+			$(this).siblings('.co_reg_date').after(btnStr);
+		});
+
+	// 수정 버튼 눌렀을 때 생기는 등록 버튼 클릭이벤트
+	$(document).on('click','.comment-list .btn-mod-comment2', function(){
+		//수정된 댓글 내용
+		var co_contents = $(this).siblings('.co_contents2').children().val();
+		//수정할 댓글 번호
+		var co_num = $(this).siblings('[name=co_num]').val();
+		
+		var comment ={
+				co_num : co_num,
+				co_contents : co_contents
+		}
+		
+		$.ajax({
+			async:false,
+			type:'POST',
+			data: JSON.stringify(comment),
+			url:"<%=request.getContextPath()%>/comment/modify",
+			dataType:"json",
+			contentType:"application/json; charset=UTF-8",
+			success : function(res){
+				if(res){
+					var page = $('.comment-pagination .active').text();
+					var co_bd_num = '${board.bd_num}'; 
+					readComment(co_bd_num,page);
+				}else{
+					alert('댓글 수정이 실패했습니다');
+				}
+			}
+		});
+		
+	});
 	
 	//화면 로딩 후 댓글과 댓글 페이지네이션 배치
 	var co_bd_num = '${board.bd_num}'; 
@@ -160,17 +213,18 @@
 		var minute = date.getMinutes();
 		return year + "-" + month + "-" + day + " " + hour + ":" + minute;
 	}
-	function createCommentStr(co_me_id,co_contents,co_reg_date, co_num){
+	function createCommentStr(comment,co_reg_date){
 		var str = 
 		'<div class="comment-box">' +
-			'<div clas="co_me_id">'+co_me_id+'</div>'+
-			'<div class="co_contents mt-2">'+co_contents+'</div>'+
+			'<input type="hidden" name="co_num" value="'+comment.co_num+'">'+
+			'<div class="co_me_id">'+comment.co_me_id+'</div>'+
+			'<div class="co_contents mt-2">'+comment.co_contents+'</div>'+
 			'<div class="co_reg_date mt-2">'+co_reg_date+'</div>'+
 			'<button class="btn-reply-comment btn btn-outline-danger">답글</button>';
-			if('${user.me_id}' == co_me_id){
+			if('${user.me_id}' == comment.co_me_id){
 				str +=
-					'<button class="btn-mod-comment btn btn-outline-warning ml-2 data-num="'+co_num+'">수정</button>'+
-					'<button class="btn-del-comment btn btn-outline-info ml-2" data-num="'+co_num+'">삭제</button>';
+					'<button class="btn-mod-comment btn btn-outline-warning ml-2 data-num="'+comment.co_num+'">수정</button>'+
+					'<button class="btn-del-comment btn btn-outline-info ml-2" data-num="'+comment.co_num+'">삭제</button>';
 			}
 			
 			str+=
@@ -192,7 +246,7 @@
 				    for(tmp of res.list){
 				    	var date = new Date(tmp.co_reg_date);
 				    	str +=
-				    		createCommentStr(tmp.co_me_id, tmp.co_contents, getDateStr(date), tmp.co_num);
+				    		createCommentStr(tmp, getDateStr(date));
 				    }
 					$('.comment-list').html(str);
 					var paginationStr = createCommentPagination(res.pm);
