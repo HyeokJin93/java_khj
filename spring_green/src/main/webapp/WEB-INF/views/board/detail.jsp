@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,15 +23,15 @@
 	</div>
 	<div class="form-group">
 	  <label>내용</label>
-	  <div class="form-control" style="height:auto; min-hiehgt: 400px">${board.bd_contents}</div>
+	  <div class="form-control" style="height: auto; min-height: 400px">${board.bd_contents}</div>
 	</div>
 	<div class="form-group">
 	  <label>첨부파일</label>
-	  <c:forEach items="${fileList }" var="file">
+	  <c:forEach items="${fileList}" var="file">
 	  	<a class="form-control" href="<%=request.getContextPath()%>/board/download?fileName=${file.fi_name}">${file.fi_ori_name}</a>
 	  </c:forEach>
 	</div>
-    <c:if test="${user != null && user.me_id == board.bd_me_id}">
+	<c:if test="${user.me_id == board.bd_me_id }">
 		<a href="<%=request.getContextPath()%>/board/modify?bd_num=${board.bd_num}">
 			<button class="btn btn-outline-success">수정</button>
 		</a>
@@ -39,23 +39,29 @@
 			<button class="btn btn-outline-success">삭제</button>
 		</a>
 	</c:if>
-	<!-- 현재 보고있는 게시글이 원본 게시글 -->
-	<c:if test="${user != null && board.bd_num == board.bd_ori_num && (board.bd_type == '일반' || board.bd_type == '질문')}">
+	<!-- 현재 보고 있는 게시글이 원본 게시글 -->
+	<c:if test="${board.bd_num == board.bd_ori_num && (board.bd_type == '일반' || board.bd_type == '질문')}">
 		<a href="<%=request.getContextPath()%>/board/register?bd_ori_num=${board.bd_num}">
 			<button class="btn btn-outline-success">답변</button>
 		</a>
 	</c:if>
-		<!-- 현재 보고있는 게시글이 답글 -->
-	<c:if test="${user != null && board.bd_num != board.bd_ori_num && (board.bd_type == '일반' || board.bd_type == '질문')}">
+	<!-- 현재 보고 있는 게시글이 답변 게시글 -->
+	<c:if test="${board.bd_num != board.bd_ori_num && (board.bd_type == '일반' || board.bd_type == '질문')}">
 		<a href="<%=request.getContextPath()%>/board/register?bd_ori_num=${board.bd_ori_num}">
 			<button class="btn btn-outline-success">답변</button>
 		</a>
 	</c:if>
+	
+	<div class="comment-list">
+		
+	</div>
+	<div class="comment-pagination"></div>
+	
 	<div class="input-group mb-3 mt-3">
-		<textarea class="form-control co_contents" rows="3"></textarea>
-		<div class="input-group-append">
-	    	<button class="btn btn-success btn-comment-insert">등록</button>
-		</div>
+	  <textarea class="form-control co_contents" rows="3"></textarea>
+	  <div class="input-group-append">
+	    <button class="btn btn-success btn-comment-insert">등록</button>
+	  </div>
 	</div>
 	
 	<script type="text/javascript">
@@ -66,27 +72,60 @@
 		$('.btn-comment-insert').click(function(){
 			var co_me_id = '${user.me_id}';
 			if(co_me_id == ''){
-				alert('댓글은 로그인한 회원만 작성가능합니다.');
+				alert('댓글은 로그인한 회원만 작성 가능합니다.');
 				return;
 			}
-			// val은 정보를 입력할 수 있는 애들만 쓸수 있음 select input 등
 			var co_contents = $('.co_contents').val();
 			var co_bd_num = '${board.bd_num}';
 			var comment = {
-					co_me_id : co_me_id,
+					co_me_id    : co_me_id,
 					co_contents : co_contents,
-					co_bd_num : co_bd_num
-			}
-			commentService.insert(comment, '/comment/insert', function(res){
+					co_bd_num   : co_bd_num
+			};
+			commentService.insert(comment, '/comment/insert',function(res){
 				if(res){
-					alert('댓글 등록이 완료 되었습니다.');
-					$('.co_contents').val('');
-				}else{
-					alert('댓글 등록에 실패 했습니다.');
-				}
-			})
+        	alert('댓글 등록이 완료 되었습니다.');
+        	$('.co_contents').val('');
+        }else{
+        	alert('댓글 등록에 실패 했습니다.');
+        }
+			});
 		});
+		
+		$.ajax({
+	    async:false,
+	    type:'get',
+	    url:contextPath + "/comment/list?page=1&bd_num="+'${board.bd_num}',
+	    dataType:"json",
+	    success : function(res){
+	        console.log(res);
+	    }
+    });
 	});
+	function createComment(comment, me_id){
+		var str = '';
+		str+=	'<div class="commnet-box clearfix">'
+		
+		if(comment.co_ori_num != comment.co_num){
+		str+=		'<div class="float-left" style="width:24px">└</div>'
+		str+=		'<div class="float-left" style="width: calc(100% - 24px)">'
+		}else{
+		str+=		'<div class="float-left" style="width: 100%">'
+		}
+		str+=			'<div class="co_me_id">'+comment.co_me_id+'</div>'
+		str+=			'<div class="co_contents">'+comment.co_contents+'</div>'
+		str+=			'<div class="co_reg_date">'+comment.co_reg_date+'</div>'
+		if(comment.co_ori_num == comment.co_num)
+		str+=			'<button class="btn btn-outline-success btn-rep-comment">답글</button>'
+		if(comment.co_me_id == me_id){
+		str+=			'<button class="btn btn-outline-dark btn-mod-comment">수정</button>'
+		str+=			'<button class="btn btn-outline-danger btn-del-comment">삭제</button>'
+		}
+		str+=		'</div>'
+		str+=		'<hr class="float-left" style="width:100%">'
+		str+=	'</div>'
+		return str;
+	}
 	</script>
 </body>
 </html>
