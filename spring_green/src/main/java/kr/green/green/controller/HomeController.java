@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import kr.green.green.service.MemberService;
@@ -67,4 +68,10 @@ public class HomeController {
 		mv.setViewName("redirect:/");
 		return mv;
 	}
+	@ResponseBody
+	@RequestMapping(value = "/idcheck")
+	public String idcheck(String me_id) {
+		return memberService.idCheck(me_id);
+	}
+	
 }

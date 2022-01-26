@@ -82,7 +82,6 @@ public class HomeController {
 	@ResponseBody
 	@RequestMapping(value ="/idcheck")
 	public String ajaxtTest1(String id){
-
 		if(!memberService.idDuplicated(id))
 			return "ok";
 		return "no";
