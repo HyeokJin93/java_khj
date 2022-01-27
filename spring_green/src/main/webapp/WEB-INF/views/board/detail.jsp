@@ -105,10 +105,46 @@
 		   	commentService.delete(deleteUrl, deleteSuccess);
 		});
 		
+		// 댓글 수정
+		
+		$(document).on('click','.btn-mod-comment', function(){
+			// 댓글 초기화
+			// siblings는 나를 제외한 형제를 찾기때문에 부모의자식들로 찾아야 모든 버튼이 나옴.
+			commentInit();
+			var text = $(this).siblings('.co_contents').text();
+			var textarea ='<textarea class="form-control co_contents2">'+text+'</textarea>';
+			var button = '<button class="btn-mod-insert btn btn-outline-warning ml-2">댓글 수정</button>';
+			$(this).siblings('.co_contents').hide();
+			$(this).parent().children('button').hide();
+			$(this).siblings('.co_contents').after(textarea);
+			$(this).siblings('.co_reg_date').after(button);			
+		});
+		
+		
+		
 		//화면 로딩 준비가 끝나면 댓글 불러옴
 		var listUrl = '/comment/list?page=1&bd_num='+'${board.bd_num}';
 		commentService.list(listUrl,listSuccess);
 	});
+	
+	function commentInit(){
+		$('.comment-box').each(function(){
+			$(this).find('.co_contents2').remove();
+			$(this).find('.btn-mod-insert').remove();
+			$(this).find('button').show();
+			$(this).find('.co_contents').show();
+		});
+	}
+	
+	function getDateToString(date){
+		return "" + 
+			date.getFullYear()  + "-" + 
+			(date.getMonth()+1) + "-" +
+			date.getDate()      + " " +
+			date.getHours()     + ":" +
+			date.getMinutes();
+	}
+	
 
 	function deleteSuccess(res){
 		if(res){
@@ -148,8 +184,9 @@
    	}
 	}
 	function createComment(comment, me_id){
+		var co_reg_date = getDateToString(new Date(comment.co_reg_date));
 		var str = '';
-		str+=	'<div class="commnet-box clearfix">'
+		str+=	'<div class="comment-box clearfix">'
 		
 		if(comment.co_ori_num != comment.co_num){
 		str+=		'<div class="float-left" style="width:24px">└</div>'
@@ -159,7 +196,7 @@
 		}
 		str+=			'<div class="co_me_id">'+comment.co_me_id+'</div>'
 		str+=			'<div class="co_contents">'+comment.co_contents+'</div>'
-		str+=			'<div class="co_reg_date">'+comment.co_reg_date+'</div>'
+		str+=			'<div class="co_reg_date">'+co_reg_date+'</div>'
 		if(comment.co_ori_num == comment.co_num)
 		str+=			'<button class="btn btn-outline-success btn-rep-comment mr-2">답글</button>'
 		if(comment.co_me_id == me_id){
