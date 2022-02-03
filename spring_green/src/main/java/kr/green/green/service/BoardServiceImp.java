@@ -22,7 +22,6 @@ public class BoardServiceImp implements BoardService {
 	BoardDAO boardDao;
 	
 	String uploadPath = "C:\\JAVA\\upload";
-	//String uploadPath = "D:\\JAVA_JIK\\upload";
 
 	@Override
 	public List<BoardVO> getBoardList(Criteria cri) {
