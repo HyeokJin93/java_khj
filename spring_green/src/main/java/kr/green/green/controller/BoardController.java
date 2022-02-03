@@ -34,84 +34,79 @@ public class BoardController {
 	
 	@RequestMapping(value="/board/list", method=RequestMethod.GET)
 	public ModelAndView boardListGet(ModelAndView mv, Criteria cri) {
+		cri.setPerPageNum(4);
 		List<BoardVO> list = boardService.getBoardList(cri);
+		//페이지메이커를 생성
+		//=>총 게시글 수, 한 페이지네이션에서 페이지 갯수, 현재 페이지 정보
+		
 		int totalCount = boardService.getTotalCount(cri);
-		PageMaker pm = new PageMaker(totalCount, 5, cri);
-		mv.addObject("pm",pm);
-		mv.addObject("list",list);
+		PageMaker pm = new PageMaker(totalCount, 2, cri);
+		
+		mv.addObject("pm", pm);
+		mv.addObject("list", list);
 		mv.setViewName("/board/list");
 		return mv;
 	}
 	@RequestMapping(value="/board/detail", method=RequestMethod.GET)
-	public ModelAndView boardDetail(ModelAndView mv, Integer bd_num) {
+	public ModelAndView boardDetailGet(ModelAndView mv, Integer bd_num) {
 		BoardVO board = boardService.getBoard(bd_num);
-		// 게시글 번호와 일치하는 첨부파일을 가져오라고 시킴
+		//게시글 번호와 일치하는 첨부파일을 가져오라고 시킴
 		List<FileVO> fileList = boardService.getFileList(bd_num);
 		boardService.updateViews(bd_num);
 		mv.addObject("fileList",fileList);
-		mv.addObject("board",board);
+		mv.addObject("board", board);
 		mv.setViewName("/board/detail");
 		return mv;
 	}
 	@RequestMapping(value="/board/register", method=RequestMethod.GET)
-	public ModelAndView boardRegistertGet(ModelAndView mv, BoardVO board) {
+	public ModelAndView boardRegisterGet(ModelAndView mv, 
+			BoardVO board) {
 		mv.addObject("board",board);
 		mv.setViewName("/board/register");
 		return mv;
 	}
 	@RequestMapping(value="/board/register", method=RequestMethod.POST)
-	public ModelAndView boardRegistertPost(ModelAndView mv, BoardVO board,
-			HttpServletRequest r, List<MultipartFile> files2) {
-		MemberVO user = (MemberVO)r.getSession().getAttribute("user");
-		// board.setBd_me_id(user.getMe_id());
+	public ModelAndView boardRegisterPost(ModelAndView mv, BoardVO board, 
+			HttpServletRequest request, List<MultipartFile> files2) {
+		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
 		boardService.registerBoard(board, user, files2);
 		mv.addObject("type",board.getBd_type());
 		mv.setViewName("redirect:/board/list");
 		return mv;
 	}
 	@RequestMapping(value="/board/modify", method=RequestMethod.GET)
-	public ModelAndView boardModifyGet(ModelAndView mv, Integer bd_num,HttpServletRequest r) {
-		MemberVO user = (MemberVO)r.getSession().getAttribute("user");
+	public ModelAndView boardModifyGet(ModelAndView mv,Integer bd_num
+			,HttpServletRequest request) {
+		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
 		
 		BoardVO board = boardService.getBoard(bd_num);
-		List<FileVO>fileList = boardService.getFileList(bd_num);
+		List<FileVO> fileList = boardService.getFileList(bd_num);
 		
-		if(user != null && board !=null &&
-				user.getMe_id().equals(board.getBd_me_id())) {
+		if(user != null && board != null && 
+			user.getMe_id().equals(board.getBd_me_id())) {
 			mv.addObject("board",board);
-			mv.addObject("fileList",fileList);
-			mv.setViewName("/board/modify");	
+			mv.addObject("fileList", fileList);
+			mv.setViewName("/board/modify");
 		}else {
-			mv.addObject("bd_num",bd_num);
+			mv.addObject("bd_num", bd_num);
 			mv.setViewName("redirect:/board/detail");
 		}
 		return mv;
 	}
 	@RequestMapping(value="/board/modify", method=RequestMethod.POST)
-	public ModelAndView boardModifyPost(ModelAndView mv, BoardVO board,
-			HttpServletRequest r, List<MultipartFile> files2, Integer [] fileNums) {
-		/* 
-		// 잘 넘어오는지 확인
-		if(fileNums != null) {
-			for(Integer tmp : fileNums)
-				System.out.println("게시글 번호 : " + tmp);
-		}
-		// 잘 넘어오는지 확인
-		if(files2 != null) {
-			for(MultipartFile tmp : files2) 
-				System.out.println("첨부파일명 : " + tmp.getOriginalFilename());
-		}
-		*/
-		MemberVO user = (MemberVO)r.getSession().getAttribute("user");
-		boardService.modifyBoard(board,user, files2, fileNums); 
+	public ModelAndView boardModifyPost(ModelAndView mv, BoardVO board
+			, HttpServletRequest request, List<MultipartFile> files2, 
+			Integer [] fileNums) {
+		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
+		boardService.modifyBoard(board,user, files2, fileNums);
 		mv.addObject("bd_num", board.getBd_num());
 		mv.setViewName("redirect:/board/detail");
 		return mv;
 	}
 	@RequestMapping(value="/board/delete", method=RequestMethod.GET)
-	public ModelAndView boardDeleteGet(ModelAndView mv, Integer bd_num, HttpServletRequest r) {
-		BoardVO board = boardService.getBoard(bd_num);
-		MemberVO user = (MemberVO)r.getSession().getAttribute("user");
+	public ModelAndView boardDeleteGet(ModelAndView mv,Integer bd_num, 
+		HttpServletRequest request) {
+		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
 		boardService.deleteBoard(bd_num, user);
 		mv.setViewName("redirect:/board/list");
 		return mv;
@@ -121,8 +116,8 @@ public class BoardController {
 	public ResponseEntity<byte[]> downloadFile(String fileName)throws Exception{
 	    InputStream in = null;
 	    ResponseEntity<byte[]> entity = null;
-		String uploadPath = "C:\\JAVA\\upload";
-		try{
+	    String uploadPath = "D:\\JAVA_JIK\\upload";
+	    try{
 	        String FormatName = fileName.substring(fileName.lastIndexOf(".")+1);
 	        HttpHeaders headers = new HttpHeaders();
 	        in = new FileInputStream(uploadPath+fileName);
@@ -140,5 +135,4 @@ public class BoardController {
 	    }
 	    return entity;
 	}
-	
 }

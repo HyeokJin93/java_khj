@@ -7,7 +7,6 @@ import org.apache.ibatis.annotations.Param;
 import kr.green.green.pagination.Criteria;
 import kr.green.green.vo.BoardVO;
 import kr.green.green.vo.FileVO;
-import kr.green.green.vo.MemberVO;
 
 public interface BoardDAO {
 
@@ -27,9 +26,8 @@ public interface BoardDAO {
 
 	void deleteFile(@Param("file")FileVO tmp);
 
-	int selectCountBoard(@Param("cri")Criteria cri);
+	int selectBoardCount(@Param("cri")Criteria cri);
 
 	void updateViews(@Param("bd_num")Integer bd_num);
-
 
 }

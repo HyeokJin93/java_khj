@@ -20,8 +20,7 @@ public class BoardVO {
 	private int bd_views;
 	
 	public String getBd_reg_date_str() {
-		// Date -> String
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 		return format.format(bd_reg_date);
 	}
 	public String getTypeTitle() {
@@ -34,7 +33,7 @@ public class BoardVO {
 	public boolean isAccessAuthority(String authority) {
 		if(bd_type.equals("일반") || bd_type.equals("qna"))
 			return true;
-		if(bd_type.equals("공지") &&
+		if(bd_type.equals("공지") && 
 				(authority.equals("관리자") || authority.equals("슈퍼 관리자")))
 			return true;
 		return false;

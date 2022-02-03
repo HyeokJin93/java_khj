@@ -93,7 +93,8 @@
 		});
 		
 		$(document).on('click', '.comment-pagination .page-item', function(){
-			if($(this).hasClass('.disabled')){
+			
+			if($(this).hasClass('disabled')){
 				return;
 			}
 			var page = $(this).data('page');
@@ -102,42 +103,30 @@
 			commentService.list(listUrl,listSuccess);
 		});
 		
-		$(document).on('click','.btn-del-comment', function(){
+		$(document).on('click', '.btn-del-comment',function(){
 			var co_num = $(this).data('num');
-		   	var deleteUrl ='/comment/delete?co_num=' + co_num;
-		   	commentService.delete(deleteUrl, deleteSuccess);
+			var deleteUrl = '/comment/delete?co_num=' + co_num;
+			commentService.delete(deleteUrl, deleteSuccess);
 		});
 		
-		// 댓글 수정
-		
-		$(document).on('click','.btn-mod-comment', function(){
-			// 댓글 초기화
-			// siblings는 나를 제외한 형제를 찾기때문에 부모의자식들로 찾아야 모든 버튼이 나옴.
+		$(document).on('click', '.btn-mod-comment',function(){
+			//댓글 초기화
 			commentInit();
-			var text = $(this).siblings('.co_contents').text();
-			var textarea ='<textarea class="form-control co_contents2">'+text+'</textarea>';
-			var button = '<button class="btn-mod-insert btn btn-outline-warning ml-2">댓글 수정</button>';
-			$(this).siblings('.co_contents').hide();
 			$(this).parent().children('button').hide();
+			$(this).siblings('.co_contents').hide();
+			var text = $(this).siblings('.co_contents').text();
+			var textarea 
+				= '<textarea class="form-control co_contents2">'+text+'</textarea>';
 			$(this).siblings('.co_contents').after(textarea);
-			$(this).siblings('.co_reg_date').after(button);			
+			var button
+				= '<button class="btn btn-outline-info btn-mod-insert">댓글 수정</button>'
+			$(this).siblings('.co_reg_date').after(button);
 		});
-		
-		
 		
 		//화면 로딩 준비가 끝나면 댓글 불러옴
 		var listUrl = '/comment/list?page=1&bd_num='+'${board.bd_num}';
 		commentService.list(listUrl,listSuccess);
 	});
-	
-	function commentInit(){
-		$('.comment-box').each(function(){
-			$(this).find('.co_contents2').remove();
-			$(this).find('.btn-mod-insert').remove();
-			$(this).find('button').show();
-			$(this).find('.co_contents').show();
-		});
-	}
 	
 	function getDateToString(date){
 		return "" + 
@@ -148,7 +137,15 @@
 			date.getMinutes();
 	}
 	
-
+	function commentInit(){
+		$('.comment-box').each(function(){
+			$(this).find('.co_contents2').remove();
+			$(this).find('.btn-mod-insert').remove();
+			$(this).find('button').show();
+			$(this).find('.co_contents').show();
+		});
+	}
+	
 	function deleteSuccess(res){
 		if(res){
 			alert('댓글을 삭제했습니다.')
@@ -159,9 +156,8 @@
 		}
 	}
 	
-	
 	function listSuccess(res){
-	var str = '';
+		var str = '';
     var me_id = '${user.me_id}';
     if(res.list.length == 0){
     	$('.comment-list').html('');
@@ -227,7 +223,6 @@
 		str+=  '</ul>'
 		return str;
 	}
-	
 	</script>
 </body>
 </html>

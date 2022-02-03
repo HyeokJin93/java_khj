@@ -20,13 +20,11 @@ public interface BoardService {
 	void modifyBoard(BoardVO board, MemberVO user, List<MultipartFile> files2, Integer[] fileNums);
 
 	void deleteBoard(Integer bd_num, MemberVO user);
-	
+
 	List<FileVO> getFileList(Integer bd_num);
 
 	int getTotalCount(Criteria cri);
 
 	void updateViews(Integer bd_num);
-
-
 
 }

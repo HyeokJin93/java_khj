@@ -1,7 +1,6 @@
 package kr.green.green.service;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,18 +15,17 @@ import kr.green.green.vo.BoardVO;
 import kr.green.green.vo.FileVO;
 import kr.green.green.vo.MemberVO;
 
-	
-
 @Service
-public class BoardServiceImp implements BoardService{
+public class BoardServiceImp implements BoardService {
 	
 	@Autowired
 	BoardDAO boardDao;
-
-	String uploadPath = "C:\\JAVA\\upload";
 	
+	String uploadPath = "C:\\JAVA\\upload";
+	//String uploadPath = "D:\\JAVA_JIK\\upload";
+
 	@Override
-	public List<BoardVO> getBoardList( Criteria cri) {
+	public List<BoardVO> getBoardList(Criteria cri) {
 		return boardDao.selectBoardList(cri);
 	}
 
@@ -153,13 +151,13 @@ public class BoardServiceImp implements BoardService{
 
 	@Override
 	public int getTotalCount(Criteria cri) {
-		return boardDao.selectCountBoard(cri);
+		return boardDao.selectBoardCount(cri);
 	}
 
 	@Override
 	public void updateViews(Integer bd_num) {
 		if(bd_num == null || bd_num <= 0)
 			return;
-		boardDao.updateViews(bd_num);		
+		boardDao.updateViews(bd_num);
 	}
 }
