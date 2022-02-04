@@ -73,7 +73,6 @@ public class HomeController {
 	}
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public ModelAndView logoutGET(ModelAndView mv, HttpServletRequest request) {
-		System.out.println("/logout:get : ");
 		// 세션에 있는 유저 정보를 삭제
 		request.getSession().removeAttribute("user");
 		mv.setViewName("redirect:/");
