@@ -9,4 +9,6 @@ public interface MemberDAO {
 	MemberVO getMember(@Param("me_id")String me_id);
 	// insert문을 씀 - 추가하고 끝나기 때문에 리턴타입이 없음	
 	void insertMember(@Param("user")MemberVO user);
+	void updateMember(@Param("user")MemberVO input);
+	MemberVO findMember(@Param("user")MemberVO member);
 }
