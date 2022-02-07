@@ -7,8 +7,16 @@
 	<title>Home</title>
 </head>
 <body>
-<div class="body">
-
+<div class="body container">
+	<select class="main-category">
+		<option>선택</option>
+	</select>
+	<select class="middle-category">
+		<option>선택</option>
+	</select>
+	<select class="sub-category">
+		<option>선택</option>
+	</select>
 </div>	
 <script>
 
