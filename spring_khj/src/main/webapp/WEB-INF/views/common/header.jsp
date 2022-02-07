@@ -28,12 +28,17 @@
 		      <a class="nav-link" href="<%=request.getContextPath()%>/mypage">마이페이지</a>
 		    </li>
 	    </c:if>
-	     <li class="nav-item">
-		      <a class="nav-link" href="<%=request.getContextPath()%>/board/list?type=공지">공지사항</a>
-		 </li>
-		 	     <li class="nav-item">
-		      <a class="nav-link" href="<%=request.getContextPath()%>/board/list">게시글</a>
-		 </li>
+		    <li class="nav-item">
+				<a class="nav-link" href="<%=request.getContextPath()%>/board/list?type=공지">공지사항</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="<%=request.getContextPath()%>/board/list">게시글</a>
+			</li>
+		 <c:if test="${user.me_authority == '슈퍼 관리자'}">
+		 	<li class="nav-item">
+				<a class="nav-link" href="<%=request.getContextPath()%>/admin/member/list">회원관리</a>
+			</li>
+		 </c:if>
 	  </ul>
 	  
 	</nav>
