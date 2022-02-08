@@ -31,6 +31,10 @@
 	  	<a class="form-control" href="<%=request.getContextPath()%>/board/download?fileName=${file.fi_name}">${file.fi_ori_name}</a>
 	  </c:forEach>
 	</div>
+	<div class="justify-content-center likes-btn-box mb-3" style="display:flex">
+		<button class="btn btn-outline-primary btn-up" data-value="1">추천</button>
+		<button class="btn btn-outline-primary btn-down ml-2" data-value="-1">비추천</button>
+	</div>	
 	<c:if test="${user.me_id == board.bd_me_id }">
 		<a href="<%=request.getContextPath()%>/board/modify?bd_num=${board.bd_num}">
 			<button class="btn btn-outline-success">수정</button>
@@ -66,10 +70,11 @@
 	  </div>
 	</div>
 	
-	<script type="text/javascript">
+	<script>
 	var contextPath = '<%=request.getContextPath()%>';
 	commentService.setContextPath(contextPath);
 	$(function(){
+		
 		$('.btn-comment-insert').click(function(){
 			var co_me_id = '${user.me_id}';
 			if(co_me_id == ''){
@@ -161,11 +166,71 @@
 			}
 			commentService.insert(comment, '/comment/insert',insertSuccess);
 		});
-		
+		$('.likes-btn-box .btn').click(function(){
+			var li_me_id = '${user.me_id}';
+			var li_bd_num = '${board.bd_num}';
+			var li_state = $(this).data('value');
+			var likes = {
+					li_me_id : li_me_id,
+					li_bd_num : li_bd_num,
+					li_state : li_state
+			}
+			$.ajax({
+				async:false,
+				type:'POST',
+				data: JSON.stringify(likes),
+				url: '<%=request.getContextPath()%>/board/likes',
+				dataType:"json",
+				contentType:"application/json; charset=UTF-8",
+				success : function(res){
+					if(res == 1)
+						alert('게시글을 추천했습니다.')
+					else if(res == -1)
+						alert('게시글을 비추천했습니다.')
+					else if(res == 0){
+						if(li_state ==1)
+							alert('추천을 취소했습니다.')
+						else
+							alert('비추천을 취소했습니다.')
+					}
+					viewLikes(likes);
+				}
+			});
+			
+		});
 		//화면 로딩 준비가 끝나면 댓글 불러옴
 		var listUrl = '/comment/list?page=1&bd_num='+'${board.bd_num}';
 		commentService.list(listUrl,listSuccess);
+		viewLikes({
+			li_bd_num : '${board.bd_num}',
+			li_me_id : '${user.me_id}'
+		});
+		
+		
 	});
+	function viewLikes(likes){
+		$.ajax({
+			async:false,
+			type:'POST',
+			data: JSON.stringify(likes),
+			url: '<%=request.getContextPath()%>/view/likes',
+			dataType:"json",
+			contentType:"application/json; charset=UTF-8",
+			success : function(res){
+				$('.likes-btn-box .btn').
+					removeClass('btn-primary').
+					addClass('btn-outline-primary');
+				$('.likes-btn-box .btn').each(function(){
+					if($(this).data('value') == res){
+						$(this)
+							.removeClass('btn-outline-primary')
+							.addClass('btn-primary');
+					}
+				});
+			}
+		});
+	}
+	
 	function modifySuccess(res){
 		if(res){
 			var page = $('.comment-pagination .active').data('page');
@@ -227,9 +292,9 @@
 	   	$('.co_contents').val('');
 	   	var listUrl = '/comment/list?page=1&bd_num='+'${board.bd_num}';
 			commentService.list(listUrl,listSuccess);
-   	}else{
-	   	alert('댓글 등록에 실패 했습니다.');
-   	}
+	   	}else{
+		   	alert('댓글 등록에 실패 했습니다.');
+	   	}
 	}
 	function createComment(comment, me_id){
 		var co_reg_date = getDateToString(new Date(comment.co_reg_date));

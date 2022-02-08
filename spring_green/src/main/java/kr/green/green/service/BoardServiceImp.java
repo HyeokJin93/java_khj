@@ -13,6 +13,7 @@ import kr.green.green.pagination.Criteria;
 import kr.green.green.utils.UploadFileUtils;
 import kr.green.green.vo.BoardVO;
 import kr.green.green.vo.FileVO;
+import kr.green.green.vo.LikesVO;
 import kr.green.green.vo.MemberVO;
 
 @Service
@@ -158,5 +159,49 @@ public class BoardServiceImp implements BoardService {
 		if(bd_num == null || bd_num <= 0)
 			return;
 		boardDao.updateViews(bd_num);
+	}
+
+	@Override
+	public String likes(LikesVO likes, MemberVO user) {
+		if(likes == null || user == null)
+			return "";
+		if(likes.getLi_me_id() == null || !likes.getLi_me_id().equals(user.getMe_id()))
+			return "";
+		// DB에서 해당 유저가 해당 게시글을 추천/비추천했는지 확인하기 위해 가져옴
+		// 처음 추천/비추천 = > db에 추가
+		// 처음 ? db에 없는 경우(아이디와 게시글 번호랑 일치하는 추천/비추천이 없는 경우)
+		// 위를 확인하기 위해 dbLikes를 가져옴
+		LikesVO dbLikes = boardDao.selectLikes(likes);
+		if(dbLikes == null) {
+			//DB에 추가
+			boardDao.insertLikes(likes);
+			//bd_up/bd_down 카운트
+			boardDao.countBoardLikes(likes);
+			//추천 상태를 리턴
+			return ""+likes.getLi_state();
+		}
+		// 처음이 아닌 경우  => db에 수정
+		// 취소하는 경우 => li_state = 0
+		if(dbLikes.getLi_state() == likes.getLi_state()) {
+			likes.setLi_state(0);
+			boardDao.updateLikes(likes);
+			//bd_up/bd_down 카운트
+			boardDao.countBoardLikes(likes);
+			return "0";
+		}
+		//추천 => 비추천 or 비추천 => 추천 or 취소 => 추천 or 취소=> 비추천으로 바뀌는 경우
+		boardDao.updateLikes(likes);
+		boardDao.countBoardLikes(likes);
+		return ""+likes.getLi_state();
+	}
+
+	@Override
+	public String viewLikes(LikesVO likes, MemberVO user) {
+		if(likes == null || user == null)
+			return "0";
+		LikesVO dbLikes = boardDao.selectLikes(likes);
+		if(dbLikes == null)
+			return "0";
+		return ""+dbLikes.getLi_state();
 	}
 }

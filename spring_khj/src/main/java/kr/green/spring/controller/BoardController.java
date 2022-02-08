@@ -195,4 +195,5 @@ public class BoardController {
 		
 		return boardService.viewLikes(likes, user);
 	}
+	
 }
