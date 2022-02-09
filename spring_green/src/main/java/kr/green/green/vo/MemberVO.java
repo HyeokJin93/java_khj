@@ -1,5 +1,6 @@
 package kr.green.green.vo;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -17,4 +18,10 @@ public class MemberVO {
 	private String me_address;
 	private String me_phone;
 	private String me_authority;
+	private String me_email;
+	
+	public String getMe_birth_str() {
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		return format.format(me_birth);
+	}
 }

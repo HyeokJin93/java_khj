@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <nav class="navbar navbar-expand-md bg-dark navbar-dark">
 	<div class="container">
-  	<a class="navbar-brand" href="<%=request.getContextPath()%>">Home</a>
+  	<a class="navbar-brand" href="#">Navbar</a>
   	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
     	<span class="navbar-toggler-icon"></span>
   	</button>
@@ -27,6 +27,9 @@
 	      	</li>
       	</c:if>
       	<c:if test="${user != null }">
+      		<li class="nav-item">
+	        	<a class="nav-link" href="<%=request.getContextPath()%>/mypage">마이페이지</a>
+	      	</li> 
 	      	<li class="nav-item">
 	        	<a class="nav-link" href="<%=request.getContextPath()%>/logout">로그아웃</a>
 	      	</li> 

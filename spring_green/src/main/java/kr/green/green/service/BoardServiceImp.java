@@ -165,43 +165,45 @@ public class BoardServiceImp implements BoardService {
 	public String likes(LikesVO likes, MemberVO user) {
 		if(likes == null || user == null)
 			return "";
-		if(likes.getLi_me_id() == null || !likes.getLi_me_id().equals(user.getMe_id()))
+		if(likes.getLi_me_id() == null || 
+				!likes.getLi_me_id().equals(user.getMe_id()))
 			return "";
-		// DB에서 해당 유저가 해당 게시글을 추천/비추천했는지 확인하기 위해 가져옴
-		// 처음 추천/비추천 = > db에 추가
-		// 처음 ? db에 없는 경우(아이디와 게시글 번호랑 일치하는 추천/비추천이 없는 경우)
-		// 위를 확인하기 위해 dbLikes를 가져옴
+		
+		
+		//처음??=>DB에 없는 경우(아이디와 게시글 번호가 일치하는 추천/비추천이 없는 경우)
 		LikesVO dbLikes = boardDao.selectLikes(likes);
+		//처음 추천/비추천한 경우 => DB에 추가
 		if(dbLikes == null) {
 			//DB에 추가
 			boardDao.insertLikes(likes);
-			//bd_up/bd_down 카운트
-			boardDao.countBoardLikes(likes);
 			//추천 상태를 리턴
 			return ""+likes.getLi_state();
 		}
-		// 처음이 아닌 경우  => db에 수정
-		// 취소하는 경우 => li_state = 0
-		if(dbLikes.getLi_state() == likes.getLi_state()) {
-			likes.setLi_state(0);
-			boardDao.updateLikes(likes);
-			//bd_up/bd_down 카운트
-			boardDao.countBoardLikes(likes);
-			return "0";
+		//처음이 아닌 경우 => DB에 수정
+		else {
+			//DB에 수정
+			//취소
+			if(dbLikes.getLi_state() == likes.getLi_state()) {
+				dbLikes.setLi_state(0);
+			}
+			//기존에 눌렀던 추천/비추천과 반대되는 경우, 취소했다가 다시 누른 경우
+			else {
+				dbLikes.setLi_state(likes.getLi_state());
+			}
+			boardDao.updateLikes(dbLikes);
 		}
-		//추천 => 비추천 or 비추천 => 추천 or 취소 => 추천 or 취소=> 비추천으로 바뀌는 경우
-		boardDao.updateLikes(likes);
-		boardDao.countBoardLikes(likes);
-		return ""+likes.getLi_state();
+			
+		return ""+dbLikes.getLi_state();
 	}
 
 	@Override
-	public String viewLikes(LikesVO likes, MemberVO user) {
+	public String views(LikesVO likes, MemberVO user) {
 		if(likes == null || user == null)
 			return "0";
+		likes.setLi_me_id(user.getMe_id());
 		LikesVO dbLikes = boardDao.selectLikes(likes);
 		if(dbLikes == null)
 			return "0";
-		return ""+dbLikes.getLi_state();
+		return "" + dbLikes.getLi_state();
 	}
 }

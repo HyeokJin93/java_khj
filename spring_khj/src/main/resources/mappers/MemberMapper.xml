@@ -60,4 +60,5 @@
   	select * from subcategory
   		where su_mi_num = #{su_mi_num}
   </select>
+
 </mapper>

@@ -28,7 +28,6 @@ import kr.green.green.vo.FileVO;
 import kr.green.green.vo.LikesVO;
 import kr.green.green.vo.MemberVO;
 
-
 @Controller
 public class BoardController {
 	
@@ -139,16 +138,17 @@ public class BoardController {
 	    return entity;
 	}
 	@ResponseBody
-	@RequestMapping("/board/likes")
-	public String boardLikes(@RequestBody LikesVO likes, HttpServletRequest request){
-			MemberVO user = (MemberVO)request.getSession().getAttribute("user");
-	    return boardService.likes(likes, user);
+	@RequestMapping(value="/board/likes")
+	public String boardLikes(@RequestBody LikesVO likes, 
+			HttpServletRequest request) {
+		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
+		return boardService.likes(likes, user);
 	}
 	@ResponseBody
-	@RequestMapping(value ="/view/likes")
-	public String boardViewLikes(@RequestBody LikesVO likes, HttpServletRequest request){
-		MemberVO user= (MemberVO)request.getSession().getAttribute("user");
-		
-		return boardService.viewLikes(likes, user);
+	@RequestMapping(value="/board/likes/views")
+	public String boardLikesViews(@RequestBody LikesVO likes, 
+			HttpServletRequest request) {
+		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
+		return boardService.views(likes,user);
 	}
 }

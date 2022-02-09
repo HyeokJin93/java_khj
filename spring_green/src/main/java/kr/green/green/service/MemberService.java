@@ -10,4 +10,8 @@ public interface MemberService {
 
 	String idCheck(String me_id);
 
+	MemberVO updateMember(MemberVO inputUser, MemberVO user);
+
+	String selectMemberByEmail(MemberVO member);
+
 }

@@ -35,8 +35,6 @@ public interface BoardDAO {
 
 	void insertLikes(@Param("likes")LikesVO likes);
 
-	void updateLikes(@Param("likes")LikesVO Likes);
-	
-	void countBoardLikes(@Param("likes")LikesVO likes);
+	void updateLikes(@Param("likes")LikesVO dbLikes);
 
 }
