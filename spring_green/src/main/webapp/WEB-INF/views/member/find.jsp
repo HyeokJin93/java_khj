@@ -11,6 +11,11 @@
 	border:1px solid #dee2e6;
 	border-color : transparent #dee2e6 #dee2e6 #dee2e6; 
 }
+.spinner-box{
+	position : absolute; top : calc(50vh - 16px);
+	left : calc(50vw - 16px); width : 32px; height : 32px;
+	display : none;
+}
 </style>
 <body>
 <ul class="nav nav-tabs find-tabs">
@@ -40,6 +45,9 @@
 		</div>
 		<button class="btn btn-outline-success btn-find-pw col-12">비밀번호 찾기</button>
 	</div>
+</div>
+<div class="spinner-box">
+	<div class="spinner-border"></div>
 </div>
 <script>
 $('.find-tabs .nav-link').click(function(){
@@ -72,6 +80,34 @@ $('.btn-find-id').click(function(){
 	});
 });
 
+$('.btn-find-pw').click(function(){
+	var me_email = $('.pw-box [name=me_email]').val();
+	var me_id = $('.pw-box [name=me_id]').val();
+	var member = {
+			me_email : me_email,
+			me_id : me_id
+	};
+	$('.spinner-box').show();
+	setTimeout(() => {
+		$.ajax({
+		  async:false,
+		  type:'POST',
+		  data:JSON.stringify(member),
+		  url: '<%=request.getContextPath()%>/member/find/pw',
+		   contentType:"application/json; charset=UTF-8",
+		   success : function(res){
+			if(res == 'ok')
+		      alert('새 비밀번호가 입력한 메일로 전송됐습니다.')
+		  	else if(res == 'fail')
+		   	  alert('일치하는 정보가 없습니다.')
+		   	else if(res == 'error')
+		   	  alert('메일 전송에 실패했습니다. 관리자에게 문의하세요.');
+			$('.spinner-box').hide();
+		   }
+		});
+	},0.1);
+});
+setTime
 $('.find-tabs .nav-link').eq(0).click();
 </script>
 </body>
