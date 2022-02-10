@@ -1,6 +1,9 @@
 package kr.green.green.controller;
 
+import java.util.Date;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -48,18 +51,23 @@ public class HomeController {
 	}
 	@RequestMapping(value= "/login", method=RequestMethod.POST)
 	public ModelAndView loginPost(ModelAndView mv, MemberVO user){
-		
 		MemberVO loginUser = memberService.login(user);
-		mv.addObject("user",loginUser);
 		if(loginUser == null)
 			mv.setViewName("redirect:/login");
-		else
+		else {
+			loginUser.setMe_auto_login(user.getMe_auto_login());
+			mv.addObject("user",loginUser);
 			mv.setViewName("redirect:/");
-	    return mv;
+		}
+	  return mv;
 	}
 	@RequestMapping(value= "/logout")
-	public ModelAndView logout(ModelAndView mv, HttpServletRequest r){
-		r.getSession().removeAttribute("user");
+	public ModelAndView logout(ModelAndView mv, HttpSession session){
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		session.removeAttribute("user");
+		user.setMe_session_limit(new Date());
+		user.setMe_session_id("none");
+		memberService.insertAutoLogin(user);
 	    mv.setViewName("redirect:/");
 	    return mv;
 	}
