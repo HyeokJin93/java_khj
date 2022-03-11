@@ -8,11 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import kr.green.futsal.service.AdminService;
+import kr.green.futsal.service.StoreService;
 import kr.green.futsal.vo.MemberVO;
+import kr.green.futsal.vo.StoreVO;
 
 @Controller
 public class AdminController {
@@ -36,4 +39,6 @@ public class AdminController {
 	public boolean adminUpdateAuthority(@RequestBody MemberVO member) {
 		return adminService.updateAuthority(member);
 	}
+	
+
 }

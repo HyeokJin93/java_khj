@@ -33,6 +33,9 @@ CREATE TABLE `member` (
   `me_detailAddress` varchar(100) DEFAULT NULL,
   `me_email` varchar(50) NOT NULL,
   `me_authority` varchar(10) DEFAULT '회원',
+  `me_auto_login` varchar(45) DEFAULT NULL,
+  `me_session_id` varchar(45) DEFAULT NULL,
+  `me_session_limit` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`me_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -43,7 +46,7 @@ CREATE TABLE `member` (
 
 LOCK TABLES `member` WRITE;
 /*!40000 ALTER TABLE `member` DISABLE KEYS */;
-INSERT INTO `member` VALUES ('asdasd','$2a$10$K9ZB74xpCVM3kX.w5N.wZ.A8wISBGRJHH0tJn24WKMZMAgm7EIFSa','010-4022-2023','asd','여성','2021-04-16',' ',NULL,'hyeokji93@naver.com','시스템 관리자'),('qweqwe','$2a$10$KA8/PcwoxQflClui0uEjPuq1SQBfMyB2uAljgEB0/1yUlwRs8Kj66','010-2322-2222','qwe','남성','2022-03-08',' ',NULL,'f@naver.com','회원'),('zxczxc','$2a$10$.IjSvGhbTXi4zLxO84VOu.m8IO3p4tXGiuxC2Px7Fn3mrK2msQJ5m','010-2322-2222','zxc','남성','2022-03-08',' ',NULL,'f@naver.com','회원'),('zzzzzz','$2a$10$IA2V5RwhQvjA9E9JJF/m8u1bLqSs07RzjrTtO77GAOlYkYXZYBwXK','010-2322-2222','zzz','남성','2022-03-01',' ',NULL,'f@naver.com','회원');
+INSERT INTO `member` VALUES ('asdasd','$2a$10$x0mKld6xbgXtdUQxX4mhUuFoqoscbKoc1Xi5eWku6XjO7HtFXb2YW','010-4022-2023','asd','남성','2021-04-16',' asdasd',NULL,'hyeokji93@naver.com','시스템 관리자',NULL,'none','2022-03-11 12:37:58.28'),('qweqwe','$2a$10$KA8/PcwoxQflClui0uEjPuq1SQBfMyB2uAljgEB0/1yUlwRs8Kj66','010-2322-2222','qwe','남성','2022-03-08',' ',NULL,'f@naver.com','회원',NULL,'E1F61FBD67CBF9C6D76323BFF08E4AD6','2022-03-18 12:38:05.504'),('zxczxc','$2a$10$.IjSvGhbTXi4zLxO84VOu.m8IO3p4tXGiuxC2Px7Fn3mrK2msQJ5m','010-2322-2222','zxc','남성','2022-03-08',' ',NULL,'f@naver.com','회원',NULL,NULL,NULL),('zzzzzz','$2a$10$IA2V5RwhQvjA9E9JJF/m8u1bLqSs07RzjrTtO77GAOlYkYXZYBwXK','010-2322-2222','zzz','남성','2022-03-01',' ',NULL,'f@naver.com','회원',NULL,NULL,NULL);
 /*!40000 ALTER TABLE `member` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -56,4 +59,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-03-11  0:23:55
+-- Dump completed on 2022-03-11 13:18:44

@@ -1,0 +1,1 @@
+store db에서 st_me_id 낫널 해제

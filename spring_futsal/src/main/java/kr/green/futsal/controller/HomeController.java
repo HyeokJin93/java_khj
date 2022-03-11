@@ -55,7 +55,7 @@ public class HomeController {
 		if(user == null) {
 			mv.setViewName("redirect:/login");
 		}else {
-			System.out.println(user);
+			user.setMe_auto_login(member.getMe_auto_login());
 			mv.addObject("user", user);
 			mv.setViewName("redirect:/");
 		}
@@ -75,6 +75,17 @@ public class HomeController {
 		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
 		if(user != null) {
 			request.getSession().removeAttribute("user");
+			//request에 있는 cookie들 중에서 loginCookie 정보를 가져옴
+			Cookie cookie = WebUtils.getCookie(request, "loginCookie");
+			//loginCookie 정보가 있으면 = 자동 로그인 상태인 경우
+			if(cookie != null) {
+				cookie.setMaxAge(0);
+				response.addCookie(cookie);
+				//자동 로그인 해제를 위해 세션 아이디에 none을 저장하고, 만료 시간을 현재시간으로 설정
+				user.setMe_session_id("none");
+				user.setMe_session_limit(new Date());
+				memberService.updateAutoLogin(user);
+			}
 		}
 		mv.setViewName("redirect:/");
 		return mv;

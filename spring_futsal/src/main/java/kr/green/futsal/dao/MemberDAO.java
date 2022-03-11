@@ -17,5 +17,9 @@ public interface MemberDAO {
 	MemberVO findMember(@Param("user")MemberVO member);
 
 	List<MemberVO> selectMemberList();
+
+	void updateAutoLogin(@Param("user")MemberVO user);
+
+	MemberVO selectMemberBySessionId(@Param("me_session_id")String me_session_id);
 	
 }

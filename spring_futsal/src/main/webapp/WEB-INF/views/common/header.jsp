@@ -27,14 +27,12 @@
 				      <a class="nav-link" href="<%=request.getContextPath()%>/admin/authority">회원 권한 관리</a>
 				    </li>
 			    </c:if>
-			    <c:if test="${user.me_authority != '회원'}">
-				    <li class="nav-item">
-				      <a class="nav-link" href="#">풋살장 관리</a>
-				    </li>
-				</c:if>
-			    	<li class="nav-item">
-						<a class="nav-link" href="#">풋살장 등록</a>
-					</li>
+			    <li class="nav-item">
+					<a class="nav-link" href="<%=request.getContextPath()%>/store/register">구장 등록</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#">구장 상세 등록</a>
+				</li>
 			    <li class="nav-item">
 			    	<a class="nav-link" href="<%=request.getContextPath()%>/logout">로그아웃</a>
 				</li>

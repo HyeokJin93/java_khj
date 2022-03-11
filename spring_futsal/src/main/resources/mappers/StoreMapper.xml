@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.green.futsal.dao.StoreDAO">
+
+ 	<insert id="registerStore">
+ 		insert into store(st_name, st_phone, st_address, st_detailAddress, st_parking, st_shower, st_me_id)
+  		values(#{store.st_name}, #{store.st_phone}, #{store.st_address}, #{store.st_detailAddress}, #{store.st_parking}, #{store.st_shower}, #{store.st_me_id})
+ 	</insert>
+
+</mapper>

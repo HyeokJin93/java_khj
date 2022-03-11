@@ -16,7 +16,7 @@
 		<input type="text" class="form-control" value="${user.me_id}" readonly>
 	</div>
 	<div class="form-group">
-		<input type="password" class="form-control" placeholder="비밀번호" name="me_pw" id="me_pw">
+		<input type="password" class="form-control" placeholder="비밀번호" name="me_pw">
 	</div>
 	<div class="form-group">
 		<input type="password" class="form-control" placeholder="비밀번호확인" name="me_pw2">
@@ -45,9 +45,8 @@
 			<input type="text" id="postcode" placeholder="우편번호" class="form-control col-6">
 			<input type="button" onclick="execDaumPostcode()" value="우편번호 찾기" class="form-control col-6">
 		</div>
-		<input type="text" id="address" placeholder="주소" class="form-control mb-2">
-		<input type="text" id="detailAddress" placeholder="상세주소" class="form-control mb-2">
-		<input type="hidden" name="me_address">
+		<input type="text" name="me_address" id="address" placeholder="주소" class="form-control mb-2">
+		<input type="text" name="me_detailAddress" id="detailAddress" placeholder="상세주소" class="form-control mb-2">
 	</div>
 	<div class="form-group">
 		<input type="text" class="form-control" placeholder="전화번호(-를 포함하여 입력하세요.)" name="me_phone" value="${user.me_phone}">
